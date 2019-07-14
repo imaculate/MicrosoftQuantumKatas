@@ -48,6 +48,7 @@ namespace Quantum.Kata.BasicGates {
         // Then rebuild the project and rerun the tests - T11_StateFlip_Test should now pass!
 
         // ...
+        X(q);
     }
 
     // Task 1.2. Basis change: |0⟩ to |+⟩ and |1⟩ to |-⟩ (and vice versa)
@@ -60,6 +61,7 @@ namespace Quantum.Kata.BasicGates {
     // |0⟩ and |1⟩ are called Z basis.
     operation BasisChange (q : Qubit) : Unit is Adj {
         // ...
+        H(q);
     }
 
 
@@ -68,6 +70,7 @@ namespace Quantum.Kata.BasicGates {
     // Goal:  Change the qubit state to α |0⟩ - β |1⟩ (flip the sign of |1⟩ component of the superposition).
     operation SignFlip (q : Qubit) : Unit is Adj {
         // ...
+        Z(q);
     }
 
 
@@ -83,6 +86,7 @@ namespace Quantum.Kata.BasicGates {
     // i.e., applying it for a second time does not return the qubit to the original state. 
     operation AmplitudeChange (alpha : Double, q : Qubit) : Unit is Adj {
         // ...
+        Ry(2.0*alpha, q);
     }
 
 
@@ -91,6 +95,7 @@ namespace Quantum.Kata.BasicGates {
     // Goal:  Change the qubit state to α |0⟩ + iβ |1⟩ (flip the phase of |1⟩ component of the superposition).
     operation PhaseFlip (q : Qubit) : Unit is Adj {
         // ...
+        S(q);
     }
 
 
@@ -104,6 +109,7 @@ namespace Quantum.Kata.BasicGates {
     //        If the qubit is in superposition, change its state according to the effect on basis vectors.
     operation PhaseChange (alpha : Double, q : Qubit) : Unit is Adj {
         // ...
+        R1(alpha, q);
     }
 
 
@@ -112,6 +118,7 @@ namespace Quantum.Kata.BasicGates {
     // Goal:  Change the two-qubit state to |Φ⁻⟩ = (|00⟩ - |11⟩) / sqrt(2).
     operation BellStateChange1 (qs : Qubit[]) : Unit is Adj {
         // ...
+        Z(qs[1]);
     }
 
 
@@ -120,6 +127,7 @@ namespace Quantum.Kata.BasicGates {
     // Goal:  Change the two-qubit state to |Ψ⁺⟩ = (|01⟩ + |10⟩) / sqrt(2).
     operation BellStateChange2 (qs : Qubit[]) : Unit is Adj {
         // ...
+        X(qs[1]);
     }
 
 
@@ -128,6 +136,8 @@ namespace Quantum.Kata.BasicGates {
     // Goal:  Change the two-qubit state to |Ψ⁻⟩ = (|01⟩ - |10⟩) / sqrt(2).
     operation BellStateChange3 (qs : Qubit[]) : Unit is Adj {
         // ...
+        Z(qs[0]);
+        X(qs[0]);
     }
 
 
@@ -145,6 +155,7 @@ namespace Quantum.Kata.BasicGates {
     // of the states of individual qubits any longer; thus the qubits become entangled.
     operation TwoQubitGate1 (qs : Qubit[]) : Unit is Adj {
         // ...
+        CNOT(qs[0], qs[1]);
     }
 
 
@@ -156,8 +167,9 @@ namespace Quantum.Kata.BasicGates {
     // the resulting two-qubit state can not be represented in such a way.
     operation TwoQubitGate2 (qs : Qubit[]) : Unit is Adj {
         // ...
+        //CPHASE(qs[0], qs[1]);
     }
-
+ 
 
     // Task 2.3. Two-qubit gate - 3
     // Input: Two qubits (stored in an array of length 2) in an arbitrary
@@ -168,6 +180,7 @@ namespace Quantum.Kata.BasicGates {
         // as an exercise, try to express the solution using several
         // (possibly controlled) Pauli gates.
         // ...
+        SWAP(qs[0], qs[1]);
     }
 
 
@@ -179,6 +192,7 @@ namespace Quantum.Kata.BasicGates {
     //        α|000⟩ + β|001⟩ + γ|010⟩ + δ|011⟩ + ε|100⟩ + ζ|101⟩ + θ|110⟩ + η|111⟩.
     operation ToffoliGate (qs : Qubit[]) : Unit is Adj {
         // ...
+        CCNOT(qs[0], qs[1], qs[2]);
     }
 
 
@@ -189,6 +203,7 @@ namespace Quantum.Kata.BasicGates {
     //        α|000⟩ + β|001⟩ + γ|010⟩ + δ|011⟩ + ε|100⟩ + η|101⟩ + ζ|110⟩ + θ|111⟩.
     operation FredkinGate (qs : Qubit[]) : Unit is Adj {
         // ...
+        
     }
 
 }
