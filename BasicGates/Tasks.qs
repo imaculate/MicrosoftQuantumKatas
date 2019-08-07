@@ -137,7 +137,7 @@ namespace Quantum.Kata.BasicGates {
     operation BellStateChange3 (qs : Qubit[]) : Unit is Adj {
         // ...
         Z(qs[0]);
-        X(qs[0]);
+        X(qs[1]);
     }
 
 
@@ -167,6 +167,8 @@ namespace Quantum.Kata.BasicGates {
     // the resulting two-qubit state can not be represented in such a way.
     operation TwoQubitGate2 (qs : Qubit[]) : Unit is Adj {
         // ...
+        //CPHASE(qs[0], qs[1]);
+        Controlled Z([qs[1]], qs[0]);
     }
  
 
@@ -202,7 +204,7 @@ namespace Quantum.Kata.BasicGates {
     //        α|000⟩ + β|001⟩ + γ|010⟩ + δ|011⟩ + ε|100⟩ + η|101⟩ + ζ|110⟩ + θ|111⟩.
     operation FredkinGate (qs : Qubit[]) : Unit is Adj {
         // ...
-        
+        Controlled SWAP([qs[0]], (qs[1], qs[2]));
     }
 
 }
