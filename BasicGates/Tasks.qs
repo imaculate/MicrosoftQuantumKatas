@@ -167,7 +167,6 @@ namespace Quantum.Kata.BasicGates {
     // the resulting two-qubit state can not be represented in such a way.
     operation TwoQubitGate2 (qs : Qubit[]) : Unit is Adj {
         // ...
-        //CPHASE(qs[0], qs[1]);
     }
  
 
