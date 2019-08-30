@@ -80,7 +80,8 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubit at the end of the operation does not matter.
     operation IsQubitA (alpha : Double, q : Qubit) : Bool {
         // ...
-        return false;
+        Ry(-2.0*alpha, q);
+        return M(q) == Zero;
     }
     
     
@@ -91,9 +92,8 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation ZeroZeroOrOneOne (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        return M(qs[0]) == Zero ? 0 | 1;
     }
-    
     
     // Task 1.6. Distinguish four basis states
     // Input: two qubits (stored in an array) which are guaranteed to be
@@ -108,9 +108,11 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation BasisStateMeasurement (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        let m1 = M(qs[0]) == One ? 1 | 0;
+        let m2 = M(qs[1]) == One ? 1 | 0;
+        return 2 * m1 + m2;
     }
-    
+
     
     // Task 1.7. Distinguish two basis states given by bit strings
     // Inputs:
@@ -128,9 +130,18 @@ namespace Quantum.Kata.Measurements {
     //          return 0 corresponds to state |010⟩, and return 1 corresponds to state |001⟩.
     operation TwoBitstringsMeasurement (qs : Qubit[], bits1 : Bool[], bits2 : Bool[]) : Int {
         // ...
-        return -1;
+        let N = Length(qs);
+        mutable firstDiff = -1;
+        for(i in 0..(N-1))
+        {
+            if(bits1[i] != bits2[i] and firstDiff == -1)
+            {
+                set firstDiff = i;
+            }
+        }
+        let m = M(qs[firstDiff]) == One;
+        return (m == bits1[firstDiff]) ? 0 | 1;
     }
-    
     
     // Task 1.8. |0...0⟩ state or W state ?
     // Input: N qubits (stored in an array) which are guaranteed to be
@@ -141,7 +152,16 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation AllZerosOrWState (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        let N = Length(qs);
+        mutable firstOne  = -1;
+        for(i in 0..(N-1))
+        {
+            if(M(qs[i]) == One and firstOne == -1)
+            {
+                set firstOne = i;
+            }
+        }
+        return firstOne == -1 ? 0 | 1;
     }
     
     
