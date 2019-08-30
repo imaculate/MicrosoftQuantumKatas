@@ -42,8 +42,7 @@ namespace Quantum.Kata.Measurements {
         //
         // Replace the returned expression with (M(q) == One).
         // Then rebuild the project and rerun the tests - T101_IsQubitOne_Test should now pass!
-
-        return false;
+        return M(q) == One;
     }
     
     
@@ -52,6 +51,10 @@ namespace Quantum.Kata.Measurements {
     // Goal:  change the state of the qubit to |0⟩.
     operation InitializeQubit (q : Qubit) : Unit {
         // ...
+        if(IsQubitOne(q))
+        {
+            X(q);
+        }
     }
     
     
@@ -62,7 +65,8 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubit at the end of the operation does not matter.
     operation IsQubitPlus (q : Qubit) : Bool {
         // ...
-        return false;
+        H(q);
+        return M(q) == Zero;
     }
     
     
