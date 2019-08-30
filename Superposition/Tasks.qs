@@ -371,9 +371,9 @@ namespace Quantum.Kata.Superposition {
             Ry(2.0*ArcSin(Sqrt(1.0/IntAsDouble(N))), qs[0]);
             for (i in 1..N-2)
             {
-                (ControlledOnInt(0, Ry))(Subarray(RangeAsIntArray(i-1..0), qs), (2.0 * ArcSin(Sqrt(1.0/IntAsDouble(N-i))), qs[i]));
+                (ControlledOnInt(0, Ry))(Subarray(RangeAsIntArray(0..i-1), qs), (2.0 * ArcSin(Sqrt(1.0/IntAsDouble(N-i))), qs[i]));
             }
-            (ControlledOnInt(0, X))(Subarray(RangeAsIntArray(N-2..0), qs), qs[N-1]);
+            (ControlledOnInt(0, X))(Subarray(RangeAsIntArray(0..N-2), qs), qs[N-1]);
         }
     }
 }
