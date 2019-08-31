@@ -174,9 +174,24 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation GHZOrWState (qs : Qubit[]) : Int {
         // ...
-        return -1;
-    }
-    
+        let N = Length(qs);
+        mutable firstDiff = -1;
+        mutable mi1 = M(qs[0]);
+        mutable mi = M(qs[0]);
+        for(i in 1..(N-1))
+        {
+            if(firstDiff == -1)
+            {
+                set mi = M(qs[i]);           
+                if(mi != mi1)
+                {
+                    set firstDiff = i;
+                }
+                set mi1 = mi;
+            }
+        }
+        return (firstDiff > -1) ? 1 | 0;
+    }    
     
     // Task 1.10. Distinguish four Bell states
     // Input: two qubits (stored in an array) which are guaranteed to be in one of the four Bell states:
@@ -193,7 +208,11 @@ namespace Quantum.Kata.Measurements {
         // Hint: you need to use 2-qubit gates to solve this task
         
         // ...
-        return -1;
+        CNOT(qs[0], qs[1]);
+        H(qs[0]);
+        let m0 = M(qs[0]) == One ? 1 | 0;
+        let m1 = M(qs[1]) == One ? 1 | 0;
+        return 2* m1 + m0;
     }
     
     
