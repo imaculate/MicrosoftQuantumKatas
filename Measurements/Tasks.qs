@@ -229,7 +229,11 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation TwoQubitState (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        H(qs[0]);
+        H(qs[1]);
+        let m0 = M(qs[0]) == One ? 1 | 0;
+        let m1 = M(qs[1]) == One ? 1 | 0;
+        return 2 * m0 + m1;
     }
     
     
@@ -246,7 +250,12 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation TwoQubitStatePartTwo (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        Controlled Z([qs[0]], qs[1]);
+        H(qs[0]);
+        H(qs[1]);
+        let m0 = M(qs[0]) == One ? 0 | 1;
+        let m1 = M(qs[1]) == One ? 0 | 1;
+        return 2 * m1 + m0;
     }
     
     
