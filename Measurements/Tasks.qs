@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 namespace Quantum.Kata.Measurements {
-    
+    open Microsoft.Quantum.Arrays;
+    open Microsoft.Quantum.Arithmetic;
+    open Microsoft.Quantum.Diagnostics;
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Convert;
@@ -258,7 +260,24 @@ namespace Quantum.Kata.Measurements {
         return 2 * m1 + m0;
     }
     
-    
+    operation WState_Arbitrary (qs : Qubit[]) : Unit is Adj {
+        // ...
+        let N = Length(qs);
+        if (N == 1)
+        {
+            X(qs[0]);
+        }
+        else
+        {
+            Ry(2.0*ArcSin(Sqrt(1.0/IntAsDouble(N))), qs[0]);
+            for (i in 1..N-2)
+            {
+                (ControlledOnInt(0, Ry))(Subarray(RangeAsIntArray(0..i-1), qs), (2.0 * ArcSin(Sqrt(1.0/IntAsDouble(N-i))), qs[i]));
+            }
+            (ControlledOnInt(0, X))(Subarray(RangeAsIntArray(0..N-2), qs), qs[N-1]);
+        }
+    }
+
     // Task 1.13**. Distinguish two orthogonal states on three qubits
     // Input: Three qubits (stored in an array) which are guaranteed to be in either one of the
     //        following two states:
@@ -270,7 +289,12 @@ namespace Quantum.Kata.Measurements {
     // The state of the qubits at the end of the operation does not matter.
     operation ThreeQubitMeasurement (qs : Qubit[]) : Int {
         // ...
-        return -1;
+        Controlled Rz([qs[1]], (4.0*PI()/3.0, qs[2]));
+        Controlled Rz([qs[2]], (8.0*PI()/3.0, qs[1]));
+
+        // Adjoint Wstate
+        Adjoint WState_Arbitrary(qs);
+        return MeasureInteger(LittleEndian(qs)) == 0 ? 0 | 1;
     }
     
     
@@ -292,7 +316,8 @@ namespace Quantum.Kata.Measurements {
     // Note: in this task you have to get accuracy of at least 80%.
     operation IsQubitPlusOrZero (q : Qubit) : Bool {
         // ...
-        return true;
+        Ry(0.25 * PI(), q);
+        return M(q) == Zero;
     }
     
     
